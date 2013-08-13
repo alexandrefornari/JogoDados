@@ -71,7 +71,7 @@ function init(){
     textFeedback.x = 80;
     textFeedback.y = 200;
 
-    
+    /*
     createjs.Ticker.addListener(window);
     createjs.Ticker.useRAF = true;
     createjs.Ticker.setFPS(60);
