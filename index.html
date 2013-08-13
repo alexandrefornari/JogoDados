@@ -1,49 +1,22 @@
 <!DOCTYPE html>
+
 <html>
-
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Jogodados : " />
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Jogodados</title>
-  </head>
-
-  <body>
-
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/alexandrefornari/JogoDados">View on GitHub</a>
-
-          <h1 id="project_title">Jogodados</h1>
-          <h2 id="project_tagline"></h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/alexandrefornari/JogoDados/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/alexandrefornari/JogoDados/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <p>Jogo de matem√°tica.</p>
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Jogodados maintained by <a href="https://github.com/alexandrefornari">alexandrefornari</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
+<head>
+    <title>Jogo dos Dados</title>
     
+</head>
 
-  </body>
+<body>
+    <input id="equacao" type="text" size="55" style="position:absolute; left:60px; top:600px"></input>
+    <input id="resposta" type="text" size="55" style="position:absolute; left:60px; top:630px"></input>
+    <canvas id="game" width="480" height="800">
+        Seu navegador n„o suporta este jogo.
+    </canvas>
+    
+    <script src="http://code.createjs.com/createjs-2013.05.14.min.js"></script>
+    <script src="http://code.createjs.com/movieclip-0.6.1.min.js"></script>
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="main.js"></script>
+
+</body>
 </html>
