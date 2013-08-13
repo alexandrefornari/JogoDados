@@ -28,7 +28,7 @@ var currentLevel;
 //Número de jogadores (1 ou 2)
 var nPlayers = 1;
 var backgroundImage;
-var dados = new Dados(2);
+var dados;
 
 //Botoes utilizados no jogo
 var bt_start, bt_rules, bt_help, bt_settings;
@@ -64,7 +64,13 @@ function init(){
                         {id:"bt_confirmar", src:"resources/bt_confirmar.png"},
                         {id:"bt_niveis", src:"resources/bt_niveis.png"},
                         {id:"bt_recomecar", src:"resources/bt_recomecar.png"},
-                        {id:"bt_ok", src:"resources/bt_ok.png"}]);
+                        {id:"bt_ok", src:"resources/bt_ok.png"},
+			{id:"dice1", src:"resources/dice1.png"},
+			{id:"dice2", src:"resources/dice2.png"},
+			{id:"dice3", src:"resources/dice3.png"},
+			{id:"dice4", src:"resources/dice4.png"},
+			{id:"dice5", src:"resources/dice5.png"},
+			{id:"dice6", src:"resources/dice6.png"}]);
     
     textFeedback = new createjs.Text("", "20px Arial", "#ff7700");
     textFeedback.lineWidth = 300;
@@ -81,8 +87,8 @@ function init(){
 
 //Assim que o carregamento do assetx estiver completo:
 function initComplete(event){
-    backgroundImage = new createjs.Bitmap(queue.getResult("background"));
-    stage.addChild(backgroundImage);
+    //backgroundImage = new createjs.Bitmap(queue.getResult("background"));
+    //stage.addChild(backgroundImage);
     
     bt_start = createButton("bt_start", 240, 250, startHandler);
     
@@ -96,6 +102,10 @@ function initComplete(event){
     bt_recomecar = createButton("bt_recomecar", 390, 760, restart);
     
     bt_ok = createButton("bt_ok", 240, 760, restart);
+    
+    dados = new Dados(2);
+    dados.visual.x = 60;
+    dados.visual.y = 200;
     
     loadScreen(currentScreen);
 }
@@ -239,6 +249,7 @@ function loadScreen(n){
             stage.addChild(bt_recomecar);
             stage.addChild(bt_niveis);
             stage.addChild(bt_confirmar);
+            stage.addChild(dados.visual);
             
             $("#equacao").val("");
             $("#resposta").val("");
@@ -284,6 +295,7 @@ function unloadScreen(){
             stage.removeChild(bt_recomecar);
             stage.removeChild(bt_niveis);
             stage.removeChild(bt_confirmar);
+            stage.removeChild(dados.visual);
             
             $("#equacao").hide();
             $("#resposta").hide();
@@ -346,29 +358,169 @@ function outBtn(event){
 
 //Classe dos dados que serão animados
 //O que utilizar pra animacao em 3d???
-function Dados(n){
-    this.n = n;
-    this.result = [];
+function Dados(nDados){
+    this.dado1 = new Dado();
+    this.dado2 = new Dado();
+    this.dado3 = new Dado();
+    this.dado4 = new Dado();
     
+    this.dados = [this.dado1, this.dado2, this.dado3, this.dado4];
+    
+    this.visual = new createjs.MovieClip();
+    
+    this.n = null;
+    this.result = null;
+
     this.setN = function (n){
+        this.removeAll();
+        switch (n) {
+            case 2:
+                this.dado1.visual.x = 0;
+                this.dado1.visual.y = 100;
+                
+                this.dado2.visual.x = 200;
+                this.dado2.visual.y = 100;
+                
+                this.visual.addChild(this.dado1.visual);
+                this.visual.addChild(this.dado2.visual);
+                break;
+            case 3:
+                this.dado1.visual.x = 0;
+                this.dado1.visual.y = 0;
+                
+                this.dado2.visual.x = 200;
+                this.dado2.visual.y = 0;
+                
+                this.dado3.visual.x = 95;
+                this.dado3.visual.y = 200;
+                
+                this.visual.addChild(this.dado1.visual);
+                this.visual.addChild(this.dado2.visual);
+                this.visual.addChild(this.dado3.visual);
+                break;
+            case 4:
+                this.dado1.visual.x = 0;
+                this.dado1.visual.y = 0;
+                
+                this.dado2.visual.x = 200;
+                this.dado2.visual.y = 0;
+                
+                this.dado3.visual.x = 0;
+                this.dado3.visual.y = 200;
+                
+                this.dado4.visual.x = 200;
+                this.dado4.visual.y = 200;
+                
+                this.visual.addChild(this.dado1.visual);
+                this.visual.addChild(this.dado2.visual);
+                this.visual.addChild(this.dado3.visual);
+                this.visual.addChild(this.dado4.visual);
+                break;
+        }
         this.n = n;
     }
     
+    this.removeAll = function(){
+        switch (this.n) {
+            case null:
+                return;
+            case 2:
+                this.visual.removeChild(this.dado1.visual);
+                this.visual.removeChild(this.dado2.visual);
+                break;
+            case 3:
+                this.visual.removeChild(this.dado1.visual);
+                this.visual.removeChild(this.dado2.visual);
+                this.visual.removeChild(this.dado3.visual);
+                break;
+            case 4:
+                this.visual.removeChild(this.dado1.visual);
+                this.visual.removeChild(this.dado2.visual);
+                this.visual.removeChild(this.dado3.visual);
+                this.visual.removeChild(this.dado4.visual);
+                break;
+        }
+    }
+    
     this.getResult = function(){
-        return result;
+        return this.result;
     }
     
     this.sort = function(){
         var i = 0;
-        result = [];
-        while (i < n){
-            result.push(Math.ceil(Math.random() * 6));
+        this.result = [];
+        while (i < this.n){
+            //result.push(Math.ceil(Math.random() * 6));
+            this.result.push(this.dados[i].sort());
+            this.dados[i].play();
             i++;
         }
-        console.log(result);
+        //console.log(this.result);
     }
     
-    this.sort();
+    this.setN(nDados);
+    
+}
+
+
+function Dado() {
+    this.count = 0;
+    this.interval = null;
+    
+    //this.faces = null;
+    //this.face = null;
+    //this.visual = null;
+    //this.sortedNumber = 0;
+
+    //this.init = function(){
+        this.faces = [new createjs.Bitmap(queue.getResult("dice1")),
+                new createjs.Bitmap(queue.getResult("dice2")),
+                new createjs.Bitmap(queue.getResult("dice3")),
+                new createjs.Bitmap(queue.getResult("dice4")),
+                new createjs.Bitmap(queue.getResult("dice5")),
+                new createjs.Bitmap(queue.getResult("dice6"))];
+        this.sortedNumber = Math.ceil(Math.random() * 6);
+        this.face = this.faces[this.sortedNumber - 1];
+        this.visual = new createjs.MovieClip();
+        this.visual.scaleX = this.visual.scaleY = 0.8;
+        this.visual.addChild(this.face);
+    //}
+    
+    this.getSorted = function(){
+        return this.sortedNumber;
+    }
+    
+    this.sort = function() {
+        this.sortedNumber = Math.ceil(Math.random() * 6);
+        return this.sortedNumber;
+        //this.play();
+    }
+
+    this.play = function() {
+        var self = this;
+        this.count = 1;
+        this.interval = setInterval(function(){self.playing();}, 50);
+    }
+
+    this.playing = function() {
+        this.count += 1;
+        if (this.count < 20) {
+            this.visual.removeChild(this.face);
+            this.face = this.faces[Math.ceil(Math.random() * 6) - 1];
+            this.visual.addChild(this.face);
+        }else{
+            this.visual.removeChild(this.face);
+            this.face = this.faces[this.sortedNumber - 1];
+            this.visual.addChild(this.face);
+            this.stop();
+        }
+        updateScreen();
+    }
+
+    this.stop = function() {
+        clearInterval(this.interval);
+    }
+    
 }
 
 
