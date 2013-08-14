@@ -377,6 +377,7 @@ function Dados(nDados){
             case 2:
                 this.dado1.visual.x = 0;
                 this.dado1.visual.y = 100;
+                //this.dado1.visual.scaleX = -0.8;
                 
                 this.dado2.visual.x = 200;
                 this.dado2.visual.y = 100;
