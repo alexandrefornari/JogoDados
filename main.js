@@ -73,16 +73,13 @@ function init(){
                         {id:"dice5", src:"resources/dice5.png"},
                         {id:"dice6", src:"resources/dice6.png"}]);
     
-    textFeedback = new createjs.Text("", "20px Arial", "#ff7700");
-    textFeedback.lineWidth = 300;
-    textFeedback.x = 80;
-    textFeedback.y = 200;
-    
     screenLoader.x = 90;
     screenLoader.y = 380;
     stage.addChild(screenLoader);
+    //screenLoader.graphics.beginFill("#000000").drawRect(0,0,300,20);
+    //screenLoader.graphics.beginFill("#ffffff").drawRect(1,1,298,18);
     textLoader.x = 200;
-    textLoader.y = 365;
+    textLoader.y = 350;
     stage.addChild(textLoader);
     
     //createjs.Ticker.addListener(window);
@@ -90,36 +87,27 @@ function init(){
     createjs.Ticker.useRAF = true;
     createjs.Ticker.setFPS(60);
     
+    textFeedback = new createjs.Text("", "20px Arial", "#ff7700");
+    textFeedback.lineWidth = 300;
+    textFeedback.x = 80;
+    textFeedback.y = 200;
 }
 
 var screenLoader = new createjs.Shape();
 var textLoader = new createjs.Text("Loading...", "20px Arial", "#000000");
+
 //Função para atualizar a atividade em 60FPS
 function tick(event) {
-    updateLoader();
-    updateScreen();
-}
-
-function updateLoader() {
     var progress = queue.progress;
     screenLoader.graphics.beginFill("#000000").drawRect(0,0,300,20);
-    screenLoader.graphics.beginFill("#222222").drawRect(1,1,298 * progress,18);
+    screenLoader.graphics.beginFill("#ffffff").drawRect(1,1,298,18);
+    screenLoader.graphics.beginFill("#ff0000").drawRect(1,1,298 * progress,18);
+    updateScreen();
+    console.log(progress);
 }
+
 
 var screenLoader = new createjs.Shape();
-//Função para atualizar a atividade em 60FPS
-function tick() {
-    
-    updateScreen();
-    
-}
-
-function updateLoader(event) {
-    var progress = queue.progress;
-    screenLoader.graphics.beginFill("#000000").drawRect(0,0,300,20);
-    screenLoader.graphics.beginFill("#222222").drawRect(1,1,298 * progress,18);
-    updateScreen();
-}
 
 
 //Assim que o carregamento do assetx estiver completo:
