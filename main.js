@@ -42,8 +42,8 @@ var textFeedback;
 //Inicia o aplicativo
 function init(){
     
-    $("#equacao").hide();
-    $("#resposta").hide();
+    //$("#equacao").hide();
+    //$("#resposta").hide();
     
     canvas = document.getElementById("game");
     ctx = canvas.getContext("2d");
@@ -114,7 +114,8 @@ var screenLoader = new createjs.Shape();
 function initComplete(event){
     //backgroundImage = new createjs.Bitmap(queue.getResult("background"));
     //stage.addChild(backgroundImage);
-
+    document.getElementById("jogo").style.background = "url(resources/inicial.png)";
+    
     createjs.Ticker.removeEventListener("tick", tick);
     stage.removeChild(screenLoader);
     stage.removeChild(textLoader);
