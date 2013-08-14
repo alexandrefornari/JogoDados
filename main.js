@@ -72,12 +72,6 @@ function init(){
                         {id:"dice4", src:"resources/dice4.png"},
                         {id:"dice5", src:"resources/dice5.png"},
                         {id:"dice6", src:"resources/dice6.png"}]);
-    stage.addChild(screenLoader);
-<<<<<<< HEAD
-    //queue.addEventListener("fileprogress", updateLoader)
-=======
-    queue.addEventListener("fileprogress", updateLoader)
->>>>>>> fc91d80d46958df1d1f896ff32a48ed5be41c60d
     
     textFeedback = new createjs.Text("", "20px Arial", "#ff7700");
     textFeedback.lineWidth = 300;
@@ -86,21 +80,20 @@ function init(){
     
     screenLoader.x = 90;
     screenLoader.y = 380;
-    
-<<<<<<< HEAD
+    stage.addChild(screenLoader);
+    textLoader.x = 200;
+    textLoader.y = 365;
+    stage.addChild(textLoader);
     
     //createjs.Ticker.addListener(window);
     createjs.Ticker.addEventListener("tick", tick);
-=======
-    /*
-    createjs.Ticker.addListener(window);
->>>>>>> fc91d80d46958df1d1f896ff32a48ed5be41c60d
     createjs.Ticker.useRAF = true;
     createjs.Ticker.setFPS(60);
     
 }
 
 var screenLoader = new createjs.Shape();
+var textLoader = new createjs.Text("Loading...", "20px Arial", "#000000");
 //Função para atualizar a atividade em 60FPS
 function tick(event) {
     updateLoader();
@@ -133,12 +126,10 @@ function updateLoader(event) {
 function initComplete(event){
     //backgroundImage = new createjs.Bitmap(queue.getResult("background"));
     //stage.addChild(backgroundImage);
-    
-<<<<<<< HEAD
+
     createjs.Ticker.removeEventListener("tick", tick);
-=======
->>>>>>> fc91d80d46958df1d1f896ff32a48ed5be41c60d
     stage.removeChild(screenLoader);
+    stage.removeChild(textLoader);
     
     bt_start = createButton("bt_start", 240, 250, startHandler);
     
