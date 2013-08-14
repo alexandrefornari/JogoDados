@@ -7,18 +7,19 @@
 </head>
 
 <body>
-    <div id="jogo" style="background-image: url(resources/inicial.png); background-repeat: no-repeat; width: 480px; height: 800px; position: relative; margin-left: auto; margin-right: auto">
+    <div id="jogo" style="background-repeat: no-repeat; width: 480px; height: 800px; position: relative; margin-left: auto; margin-right: auto">
         
         <canvas id="game" width="480" height="800">
             Seu navegador não suporta este jogo.
         </canvas>
         
-        <input id="equacao" type="text" style="position:absolute; left: 15%; top: 75%; width: 70%; font-family: arial; font-size: 12"></input>
-        <input id="resposta" type="text" style="position:absolute; left: 15%; top: 79%; width: 70%; font-family: arial; font-size: 12"></input>
+        <input id="equacao" type="text" style="display: none; position:absolute; left: 15%; top: 75%; width: 70%; font-family: arial; font-size: 12"></input>
+        <input id="resposta" type="text" style="display: none; position:absolute; left: 15%; top: 79%; width: 70%; font-family: arial; font-size: 12"></input>
         
         <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
         <script src="http://code.createjs.com/createjs-2013.05.14.min.js"></script>
         <script src="http://code.createjs.com/movieclip-0.6.1.min.js"></script>
+        <script src="http://code.createjs.com/preloadjs-0.3.1.min.js"></script>
         <script src="main.js"></script>
     </div>
 

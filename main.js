@@ -42,12 +42,13 @@ var textFeedback;
 //Inicia o aplicativo
 function init(){
     
-    $("#equacao").hide();
-    $("#resposta").hide();
+    //$("#equacao").hide();
+    //$("#resposta").hide();
     
     canvas = document.getElementById("game");
     ctx = canvas.getContext("2d");
     stage = new createjs.Stage("game");
+    createjs.Touch.enable(stage);
     stage.enableMouseOver();
     queue = new createjs.LoadQueue(false);
     queue.addEventListener("complete", initComplete);
@@ -65,30 +66,59 @@ function init(){
                         {id:"bt_niveis", src:"resources/bt_niveis.png"},
                         {id:"bt_recomecar", src:"resources/bt_recomecar.png"},
                         {id:"bt_ok", src:"resources/bt_ok.png"},
-			{id:"dice1", src:"resources/dice1.png"},
-			{id:"dice2", src:"resources/dice2.png"},
-			{id:"dice3", src:"resources/dice3.png"},
-			{id:"dice4", src:"resources/dice4.png"},
-			{id:"dice5", src:"resources/dice5.png"},
-			{id:"dice6", src:"resources/dice6.png"}]);
+                        {id:"dice1", src:"resources/dice1.png"},
+                        {id:"dice2", src:"resources/dice2.png"},
+                        {id:"dice3", src:"resources/dice3.png"},
+                        {id:"dice4", src:"resources/dice4.png"},
+                        {id:"dice5", src:"resources/dice5.png"},
+                        {id:"dice6", src:"resources/dice6.png"}]);
+    
+    screenLoader.x = 90;
+    screenLoader.y = 380;
+    stage.addChild(screenLoader);
+    //screenLoader.graphics.beginFill("#000000").drawRect(0,0,300,20);
+    //screenLoader.graphics.beginFill("#ffffff").drawRect(1,1,298,18);
+    textLoader.x = 200;
+    textLoader.y = 350;
+    stage.addChild(textLoader);
+    
+    //createjs.Ticker.addListener(window);
+    createjs.Ticker.addEventListener("tick", tick);
+    createjs.Ticker.useRAF = true;
+    createjs.Ticker.setFPS(60);
     
     textFeedback = new createjs.Text("", "20px Arial", "#ff7700");
     textFeedback.lineWidth = 300;
     textFeedback.x = 80;
     textFeedback.y = 200;
-
-    /*
-    createjs.Ticker.addListener(window);
-    createjs.Ticker.useRAF = true;
-    createjs.Ticker.setFPS(60);
-    */
 }
+
+var screenLoader = new createjs.Shape();
+var textLoader = new createjs.Text("Loading...", "20px Arial", "#000000");
+
+//Função para atualizar a atividade em 60FPS
+function tick(event) {
+    var progress = queue.progress;
+    screenLoader.graphics.beginFill("#000000").drawRect(0,0,300,20);
+    screenLoader.graphics.beginFill("#ffffff").drawRect(1,1,298,18);
+    screenLoader.graphics.beginFill("#ff0000").drawRect(1,1,298 * progress,18);
+    updateScreen();
+    console.log(progress);
+}
+
+
+var screenLoader = new createjs.Shape();
 
 
 //Assim que o carregamento do assetx estiver completo:
 function initComplete(event){
     //backgroundImage = new createjs.Bitmap(queue.getResult("background"));
     //stage.addChild(backgroundImage);
+    document.getElementById("jogo").style.background = "url(resources/inicial.png)";
+    
+    createjs.Ticker.removeEventListener("tick", tick);
+    stage.removeChild(screenLoader);
+    stage.removeChild(textLoader);
     
     bt_start = createButton("bt_start", 240, 250, startHandler);
     
@@ -316,13 +346,6 @@ function updateScreen(){
     stage.update();
 }
 
-//Função para atualizar a atividade em 60FPS
-function tick() {
-    updateScreen();
-    
-}
-
-
 
 //Função para criar os botoes
 function createButton(id, posX, posY, func){
@@ -492,14 +515,17 @@ function Dado() {
     }
     
     this.sort = function() {
-        this.sortedNumber = Math.ceil(Math.random() * 6);
+        if (!this.isPLaying) this.sortedNumber = Math.ceil(Math.random() * 6);
         return this.sortedNumber;
         //this.play();
     }
-
+    
+    this.isPLaying = false;
     this.play = function() {
+        if (this.isPLaying) return;
         var self = this;
         this.count = 1;
+        this.isPLaying = true;
         this.interval = setInterval(function(){self.playing();}, 50);
     }
 
@@ -520,6 +546,7 @@ function Dado() {
 
     this.stop = function() {
         clearInterval(this.interval);
+        this.isPLaying = false;
     }
     
 }
