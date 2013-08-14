@@ -103,7 +103,6 @@ function tick(event) {
     screenLoader.graphics.beginFill("#ffffff").drawRect(1,1,298,18);
     screenLoader.graphics.beginFill("#ff0000").drawRect(1,1,298 * progress,18);
     updateScreen();
-    console.log(progress);
 }
 
 
