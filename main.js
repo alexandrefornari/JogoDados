@@ -334,7 +334,7 @@ function createButton(id, posX, posY, func){
     img.y = -queue.getResult(id).height/2;
     bt.x = posX;
     bt.y = posY;
-    bt.addEventListener("mousedown", func);
+    bt.addEventListener("click", func);
     bt.addEventListener("mouseover", overBtn);
     bt.addEventListener("mouseout", outBtn);
     return bt;
