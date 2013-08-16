@@ -5,27 +5,27 @@ var stage, queue, canvas, ctx;
 
 
 //Constantes das telas do jogo:
-const INICIAL = 0;
-const SETTINGS = 1;
-const ABOUT = 2;
-const RULES = 3;
-const DIFFICULT = 4;
-const PLAYING = 5;
-const FEEDBACK = 6;
-const RESULT = 7;
+var INICIAL = 0;
+var SETTINGS = 1;
+var ABOUT = 2;
+var RULES = 3;
+var DIFFICULT = 4;
+var PLAYING = 5;
+var FEEDBACK = 6;
+var RESULT = 7;
 
-//Níveis de dificuldade do jogo:
-const EASY = 0;
-const MEDIUM = 1;
-const HARD = 2;
+//Nï¿½veis de dificuldade do jogo:
+var EASY = 0;
+var MEDIUM = 1;
+var HARD = 2;
 
-const SCALE = 30;
+var SCALE = 30;
 
 //Tela atual
 var currentScreen = INICIAL;
 var currentLevel;
 
-//Número de jogadores (1 ou 2)
+//Nï¿½mero de jogadores (1 ou 2)
 var nPlayers = 1;
 var backgroundImage;
 var dados;
@@ -96,7 +96,7 @@ function init(){
 var screenLoader = new createjs.Shape();
 var textLoader = new createjs.Text("Loading...", "20px Arial", "#000000");
 
-//Função para atualizar a atividade em 60FPS
+//Funï¿½ï¿½o para atualizar a atividade em 60FPS
 function tick(event) {
     var progress = queue.progress;
     screenLoader.graphics.beginFill("#000000").drawRect(0,0,300,20);
@@ -173,7 +173,7 @@ function goToMenu(event){
 
 //Avalia o que foi inserido na resposta
 function evaluate(event){
-    //Verifica se todos os campos estão preenchidos
+    //Verifica se todos os campos estï¿½o preenchidos
     var input = $("#equacao").val();
     var resultado = $("#resposta").val();
     
@@ -184,9 +184,9 @@ function evaluate(event){
         resultado = resultado.replace(" ", "");
     }
     
-    //Caso um dos campos esteja em branco, envia uma mensagem ao usuário.
+    //Caso um dos campos esteja em branco, envia uma mensagem ao usuï¿½rio.
     if (input == "" || resultado == "") {
-        alert("Você precisa preencher os dados antes de avaliar.");
+        alert("Vocï¿½ precisa preencher os dados antes de avaliar.");
         return;
     }
     
@@ -199,7 +199,7 @@ function evaluate(event){
     var soma = 0;
     
     for(var i = 0; i < result.length; i++){
-        //console.log("É par? " + result[i] % 2);
+        //console.log("ï¿½ par? " + result[i] % 2);
         if(result[i] % 2 != 0){
             result[i] *= -1;
         }
@@ -223,18 +223,18 @@ function evaluate(event){
     feedback = "";
     if (input.length == 0) {
         //console.log("Equacao correta");
-        feedback += "A equação digitada está correta!";
+        feedback += "A equaï¿½ï¿½o digitada estï¿½ correta!";
     }else{
         //console.log("Sobrou: " + input + " na equacao.");
-        feedback += "Preste atenção nos valores sorteados e tente novamente."
+        feedback += "Preste atenï¿½ï¿½o nos valores sorteados e tente novamente.";
     }
     
     if (soma.toString() == resultado) {
         //console.log("Soma correta");
-        feedback += "\nO resultado está correto!";
+        feedback += "\nO resultado estï¿½ correto!";
     }else{
         //console.log("Soma incorreta: " + soma);
-        feedback += "\nA soma está incorreta. A soma correta seria " + soma;
+        feedback += "\nA soma estï¿½ incorreta. A soma correta seria " + soma;
     }
     //console.log("Soma correta? " + soma.toString() == resultado);
     //console.log("Equacao correta? " + input.length);
@@ -243,7 +243,7 @@ function evaluate(event){
     loadScreen(FEEDBACK);
 }
 
-//Lançar os dados novamente
+//Lanï¿½ar os dados novamente
 function restart(event){
     unloadScreen();
     loadScreen(PLAYING);
@@ -297,7 +297,7 @@ function loadScreen(n){
     updateScreen();
 }
 
-//Descarrega a tela e os botões que estão carregados
+//Descarrega a tela e os botï¿½es que estï¿½o carregados
 function unloadScreen(){
     switch (currentScreen){
         case INICIAL:
@@ -346,7 +346,7 @@ function updateScreen(){
 }
 
 
-//Função para criar os botoes
+//Funï¿½ï¿½o para criar os botoes
 function createButton(id, posX, posY, func){
     var bt = new createjs.MovieClip();
     bt.name = id;
@@ -378,7 +378,7 @@ function outBtn(event){
 
 
 
-//Classe dos dados que serão animados
+//Classe dos dados que serï¿½o animados
 //O que utilizar pra animacao em 3d???
 function Dados(nDados){
     this.dado1 = new Dado();
@@ -441,7 +441,7 @@ function Dados(nDados){
                 break;
         }
         this.n = n;
-    }
+    };
     
     this.removeAll = function(){
         switch (this.n) {
@@ -463,11 +463,11 @@ function Dados(nDados){
                 this.visual.removeChild(this.dado4.visual);
                 break;
         }
-    }
+    };
     
     this.getResult = function(){
         return this.result;
-    }
+    };
     
     this.sort = function(){
         var i = 0;
@@ -479,7 +479,7 @@ function Dados(nDados){
             i++;
         }
         //console.log(this.result);
-    }
+    };
     
     this.setN(nDados);
     
@@ -489,6 +489,7 @@ function Dados(nDados){
 function Dado() {
     this.count = 0;
     this.interval = null;
+    
     
     //this.faces = null;
     //this.face = null;
@@ -511,13 +512,13 @@ function Dado() {
     
     this.getSorted = function(){
         return this.sortedNumber;
-    }
+    };
     
     this.sort = function() {
         if (!this.isPLaying) this.sortedNumber = Math.ceil(Math.random() * 6);
         return this.sortedNumber;
         //this.play();
-    }
+    };
     
     this.isPLaying = false;
     this.play = function() {
@@ -526,7 +527,7 @@ function Dado() {
         this.count = 1;
         this.isPLaying = true;
         this.interval = setInterval(function(){self.playing();}, 50);
-    }
+    };
 
     this.playing = function() {
         this.count += 1;
@@ -541,12 +542,12 @@ function Dado() {
             this.stop();
         }
         updateScreen();
-    }
+    };
 
     this.stop = function() {
         clearInterval(this.interval);
         this.isPLaying = false;
-    }
+    };
     
 }
 
